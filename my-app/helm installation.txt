@@ -1,0 +1,3 @@
+helm upgrade --install prod-app ./helm/my-app \
+  --namespace app-production \
+  --values ./helm/my-app/values.yaml

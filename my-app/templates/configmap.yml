@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "my-app.labels" . | nindent 4 }}
+data:
+  AWS_REGION: {{ .Values.global.awsRegion | quote }}
+  DB_HOST: {{ .Values.externalServices.rds.host | quote }}
+  DB_PORT: {{ .Values.externalServices.rds.port | quote }}
+  DB_NAME: {{ .Values.externalServices.rds.dbName | quote }}
+  S3_BUCKET_NAME: {{ .Values.externalServices.s3.bucketName | quote }}
+  SNS_TOPIC_ARN: {{ .Values.externalServices.sns.topicArn | quote }}

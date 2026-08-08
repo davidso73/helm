@@ -1,0 +1,22 @@
+# Set environment details
+export AWS_REGION="us-east-1"
+export AWS_ACCOUNT_ID="123456789012"
+export TAG="1.0.0"
+
+# 1. Authenticate Docker with Amazon ECR
+aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+
+# 2. Build local images
+docker build -t app-frontend:${TAG} ./frontend
+docker build -t app-backend:${TAG} ./backend
+docker build -t app-worker:${TAG} ./worker
+
+# 3. Tag images for ECR
+docker tag app-frontend:${TAG} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}[.amazonaws.com/app-frontend:$](https://.amazonaws.com/app-frontend:$){TAG}
+docker tag app-backend:${TAG} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}[.amazonaws.com/app-backend:$](https://.amazonaws.com/app-backend:$){TAG}
+docker tag app-worker:${TAG} ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}[.amazonaws.com/app-worker:$](https://.amazonaws.com/app-worker:$){TAG}
+
+# 4. Push images to ECR
+docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}[.amazonaws.com/app-frontend:$](https://.amazonaws.com/app-frontend:$){TAG}
+docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}[.amazonaws.com/app-backend:$](https://.amazonaws.com/app-backend:$){TAG}
+docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}[.amazonaws.com/app-worker:$](https://.amazonaws.com/app-worker:$){TAG}

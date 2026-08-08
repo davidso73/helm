@@ -1,0 +1,23 @@
+[External Client] ---> (Ingress: Ports 80/443) 
+                               |
+                               +---> [Frontend Service (Port 80)] ---> [Frontend Pods]
+                               |
+                               +---> [Backend Service (Port 8000)] ---> [Backend Pods]
+                                                                             |
+                                                                             +---> [Amazon RDS: Port 5432]
+                                                                             +---> [AWS S3 / SNS API]
+                               
+[Worker Pods] ---------------------------------------------------------------> [Amazon RDS: Port 5432]
+                                                                             +---> [AWS S3 API]
+
+
+
+Public Traffic: Enters through the NGINX Ingress Controller.
+
+Frontend Pods: Accessible only via Ingress on Port 80. Cannot connect to RDS.
+
+Backend Pods: Exposed internally via ClusterIP on Port 8000. Accessible only by Ingress or Frontend.
+
+Worker Pods: Entirely isolated. They do not expose any Kubernetes Service or network port.
+
+RDS PostgreSQL Access: Restricted by Security Groups attached to EKS worker node subnets. Only traffic from EKS node security groups on port 5432 is accepted by RDS.

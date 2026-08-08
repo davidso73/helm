@@ -1,0 +1,8 @@
+# 1. Create target namespace
+kubectl create namespace app-production
+
+# 2. Inject production database credentials secret
+kubectl create secret generic db-credentials \
+  --namespace app-production \
+  --from-literal=DB_USERNAME="postgres_admin" \
+  --from-literal=DB_PASSWORD="YourActualStrongPassword2026!"

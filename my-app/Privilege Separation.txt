@@ -1,0 +1,7 @@
+Each microservice is bound to a dedicated IAM Role for Service Accounts (IRSA).
+
+sa-app-backend: Granted IAM permissions restricted solely to s3:GetObject, s3:PutObject on the application bucket and sns:Publish on the alert topic.
+
+sa-app-worker: Granted read-only permissions to Amazon S3 (s3:GetObject).
+
+frontend: Does not use a ServiceAccount (bound to default non-privileged default account with automountServiceAccountToken: false).

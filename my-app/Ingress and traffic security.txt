@@ -1,0 +1,5 @@
+External Exposure: Single entry point managed by an AWS Network Load Balancer routing to the NGINX Ingress Controller.
+
+Transport Layer Security (TLS): HTTPS is terminated at the Ingress layer using Let's Encrypt certificates automatically issued and renewed by cert-manager.
+
+Traffic Isolation: Public traffic is constrained to paths explicitly declared in the Ingress manifest (/ and /api). Internal cluster services are unreachable directly from the internet.

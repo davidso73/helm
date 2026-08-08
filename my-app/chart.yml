@@ -1,0 +1,6 @@
+apiVersion: v2
+name: my-app
+description: Production Helm chart for multi-tier microservices on EKS
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

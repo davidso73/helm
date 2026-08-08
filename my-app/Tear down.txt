@@ -1,0 +1,5 @@
+# Delete the Helm deployment
+helm uninstall prod-app --namespace app-production
+
+# Delete namespace and stored secrets
+kubectl delete namespace app-production

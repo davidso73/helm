@@ -1,0 +1,9 @@
+Non-Root Execution: Every container runs as UID/GID 10001 (runAsNonRoot: true).
+
+Filesystem Hardening: Root filesystems are mounted as read-only (readOnlyRootFilesystem: true). Ephemeral data must be written to explicit emptyDir mounts if needed.
+
+Capability Drop: All Linux capabilities (ALL) are removed (capabilities.drop: ["ALL"]).
+
+Image Tagging Strategy: Every image uses explicit semver tags (e.g., 1.0.0). The :latest tag is prohibited in production to prevent unexpected drift during pod reschedules.
+
+Image Scanning: Images must be scanned during CI/CD using Trivy or Amazon ECR Basic/Enhanced Scanning (powered by Inspector) to block deployment of critical CVEs.

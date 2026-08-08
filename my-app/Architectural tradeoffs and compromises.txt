@@ -1,0 +1,17 @@
+In-Cluster Nginx vs. AWS ALB Ingress Controller:
+
+Trade-off: Used NGINX Ingress with a single AWS Network Load Balancer (NLB) rather than the AWS Load Balancer Controller managing an ALB per Ingress.
+
+Rationale: NGINX provides faster path routing, cheaper footprint (one NLB vs. multiple ALBs), and standardized annotation behavior across any K8s engine.
+
+RDS Outside Kubernetes:
+
+Trade-off: Running PostgreSQL on AWS RDS instead of running a CloudNativePG or Zalando Postgres operator inside EKS.
+
+Rationale: Keeps database state management, automated point-in-time recovery (PITR), and Multi-AZ failover managed by AWS, allowing EKS nodes to remain purely stateless.
+
+Kubernetes Native Secrets vs. KMS/Vault Operators:
+
+Trade-off: Used standard Kubernetes secrets populated manually during bootstrap rather than installing External Secrets Operator (ESO) backed by AWS Secrets Manager.
+
+Rationale: Reduces initial deployment complexity while maintaining a clean boundary. Upgrading to ESO requires zero changes to application code, only replacing the static Secret object with an ExternalSecret manifest.

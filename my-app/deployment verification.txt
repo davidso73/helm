@@ -1,0 +1,8 @@
+# Check pod rollout status
+kubectl get pods -n app-production -o wide
+
+# Check services and ingress endpoints
+kubectl get svc,ingress -n app-production
+
+# View backend health logs
+kubectl logs -n app-production -l app.kubernetes.io/component=backend --tail=50
