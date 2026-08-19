@@ -1,0 +1,48 @@
+Communication Directions	
+North-South (External Inbound):	
+1	Internet Client
+	Internet Gateway
+	AWS ALB
+	(Public HTTPS).
+2	AWS ALB
+	K8s Ingress Controller
+	(NodePort/TargetGroup routing).
+3	Ingress Controller
+	Frontend Service
+	Frontend Pods
+	.
+East-West (Internal Cluster Traffic):	
+1	Frontend Pods
+	Backend Service (ClusterIP)
+	Backend Pods
+	(Internal REST/gRPC API calls).
+2	Backend Pods
+	/
+	Worker Pods
+	read settings from
+	ConfigMaps
+	and credentials from
+	Secrets
+	inside the
+	my-app
+	namespace.
+EKS to External AWS Services:	
+1	Database:
+	Backend
+	&
+	Worker Pods
+	RDS Instance
+	via private database endpoints over Port 5432 (PostgreSQL) or 3306 (MySQL).
+2	Object Storage:
+	Backend
+	&
+	Worker Pods
+	Amazon S3
+	API calls using IAM credentials provided automatically by the pod's
+	ServiceAccount
+	.
+3	Messaging:
+	Backend Pods
+	Amazon SNS
+	to publish event notifications using the pod's
+	ServiceAccount
